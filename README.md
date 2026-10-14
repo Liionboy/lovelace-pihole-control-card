@@ -11,26 +11,26 @@ A responsive Home Assistant Lovelace card for Pi-hole v6, styled to match the Au
 - Optional maintenance buttons with an in-card confirmation step
 - Optional installed-version and update-available badges
 - Responsive, theme-aware design
-- All entity IDs are selected in the card editor; no personal entity IDs are built in
+- Automatically discovers enabled entities from the `pi_hole` and `pi_hole_v6` integrations
+- Automatically groups statistics, blocking/group switches, maintenance buttons, and version entities by integration instance
+- Shows an instance picker when multiple Pi-hole integrations are configured
+- Keeps manual entity configuration available for custom or unsupported setups
 
 ## Install with HACS
 
 1. In HACS, open the three-dot menu and choose **Custom repositories**.
 2. Add `Liionboy/lovelace-pihole-control-card` with type **Dashboard**.
 3. Install **Pi-hole Control Card**.
-4. Add the card and choose the Pi-hole switch, status sensor, and statistic sensors.
+4. Add the card. In automatic mode it discovers the Pi-hole entities; no entity IDs need to be selected.
 
 ```yaml
 type: custom:pihole-control-card
-entity: switch.example_pihole
-status_entity: binary_sensor.example_pihole_status
-queries_entity: sensor.example_pihole_queries
-blocked_entity: sensor.example_pihole_blocked
-blocked_percentage_entity: sensor.example_pihole_blocked_percentage
-domains_entity: sensor.example_pihole_domains
+mode: auto
 palette: aurora
 pause_service_domain: auto
 ```
+
+Automatic discovery reads Home Assistant's entity registry and groups enabled `pi_hole` / `pi_hole_v6` entities by config entry. When multiple instances are found, choose one from the selector on the card. Registry access requires an administrator account. To use custom entity IDs instead, set `mode: manual` and configure `entity` plus any optional entity fields below. Existing configurations with `entity:` and no `mode:` continue to use manual mode.
 
 Optional sensors: `unique_clients_entity`, `seen_clients_entity`, `cached_entity`, `forwarded_entity`, `query_rate_entity`, and `remaining_entity` (seconds until blocking resumes). `group_switches`, `maintenance_buttons`, and `update_entities` each accept a list of matching entity IDs. Maintenance actions ask for an in-card confirmation before calling `button.press`.
 
@@ -40,7 +40,9 @@ Optional sensors: `unique_clients_entity`, `seen_clients_entity`, `cached_entity
 
 | Option | Required | Description |
 | --- | --- | --- |
-| `entity` | Yes | Pi-hole ad-blocking switch |
+| `mode` | No | `auto` (default for new cards) or `manual` |
+| `instance` | No | Optional config-entry ID to preselect an automatically detected instance |
+| `entity` | Manual | Pi-hole ad-blocking switch |
 | `status_entity` | No | Binary sensor indicating whether Pi-hole is running |
 | `queries_entity` | No | Total DNS queries |
 | `blocked_entity` | No | Blocked DNS queries |
