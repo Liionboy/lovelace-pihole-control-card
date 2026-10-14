@@ -1,6 +1,6 @@
 # Pi-hole Control Card
 
-A responsive Home Assistant Lovelace card for Pi-hole v6, styled to match the Aurora/Ocean/Sunset/Lavender card collection.
+A responsive Home Assistant Lovelace card for Pi-hole v6, styled to match the Aurora/Ocean/Sunset/Lavender card collection, with an optional per-sensor Rainbow palette.
 
 ## Features
 
@@ -11,6 +11,7 @@ A responsive Home Assistant Lovelace card for Pi-hole v6, styled to match the Au
 - Optional maintenance buttons with an in-card confirmation step
 - Optional installed-version and update-available badges
 - Responsive, theme-aware design
+- Optional Rainbow palette with a distinct color for each statistic/sensor
 - Automatically discovers enabled entities from the `pi_hole` and `pi_hole_v6` integrations
 - Automatically groups statistics, blocking/group switches, maintenance buttons, and version entities by integration instance
 - Shows an instance picker when multiple Pi-hole integrations are configured
@@ -52,4 +53,4 @@ Optional sensors: `unique_clients_entity`, `seen_clients_entity`, `cached_entity
 | `maintenance_buttons` | No | List of Pi-hole action buttons; each action requires confirmation |
 | `update_entities` | No | List of update entities for installed versions and update status |
 | `remaining_entity` | No | Remaining pause duration in seconds |
-| `palette` | No | `aurora`, `ocean`, `sunset`, or `lavender` |
+| `palette` | No | `aurora`, `ocean`, `sunset`, `lavender`, or `rainbow` (distinct color per sensor) |
